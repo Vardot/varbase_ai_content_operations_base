@@ -17,7 +17,7 @@
         "editorial workflow"
     ],
     "license": "GPL-2.0-or-later",
-    "homepage": "https://github.com/Vardot/varbase_ai_content_operations_base",
+    "homepage": "https://www.drupal.org/project/varbase_ai_content_operations_base",
     "authors": [
         {
             "name": "Vardot",
@@ -26,8 +26,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/Vardot/varbase_ai_content_operations_base/issues",
-        "source": "https://github.com/Vardot/varbase_ai_content_operations_base"
+        "issues": "https://www.drupal.org/project/issues/varbase_ai_content_operations_base",
+        "source": "https://git.drupalcode.org/project/varbase_ai_content_operations_base"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

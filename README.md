@@ -1,10 +1,9 @@
 [![Varbase](https://raw.githubusercontent.com/Vardot/varbase/11.0.x/images/varbase-logo.png)](https://www.drupal.org/project/varbase)
 
 # Varbase AI Content Operations Base
-[![CI](https://github.com/Vardot/varbase_ai_content_operations_base/actions/workflows/ci.yml/badge.svg?branch=1.0.x)](https://github.com/Vardot/varbase_ai_content_operations_base/actions/workflows/ci.yml)
-[![Varbase AI Content Operations Base](https://img.shields.io/badge/Varbase%20AI%20Content%20Operations%20Base-1.0.1-0d6efc?labelColor=001d38&style=flat-square)](https://github.com/Vardot/varbase_ai_content_operations_base/releases/tag/1.0.1)
+[![Varbase AI Content Operations Base](https://img.shields.io/badge/Varbase%20AI%20Content%20Operations%20Base-1.0.x--dev-0d6efc?labelColor=001d38&style=flat-square)](https://www.drupal.org/project/varbase_ai_content_operations_base)
 
-A private, **opt-in** Drupal recipe that gives the editors of a Varbase 11 site a **content operations assistant**
+An **opt-in** Drupal recipe that gives the editors of a Varbase 11 site a **content operations assistant**
 in the admin toolbar. Editors ask in their own words, and it audits, reports on and updates the site's content:
 
 - "Which pages have broken internal links or missing alt text?"
@@ -18,7 +17,7 @@ It works **with the editor's own permissions**, shows every change first, and **
 approves**, as a new revision with a log message. It never deletes, and it never touches users, permissions or the
 content model.
 
-It is not the visitor chatbot. [Varbase AI Chatbot Base](https://github.com/Vardot/varbase_ai_chatbot_base) answers
+It is not the visitor chatbot. [Varbase AI Chatbot Base](https://www.drupal.org/project/varbase_ai_chatbot_base) answers
 visitors from published content and cannot change anything; this assistant is for signed-in editors only.
 
 **Experimental.** [Tool API](https://www.drupal.org/project/tool) and [Tool Belt](https://www.drupal.org/project/tool_belt)
@@ -68,11 +67,9 @@ Those are the fields of Varbase Starter, Educare, Horizon Aid and The Rightup.
 ## Install and apply
 
 ```bash
-# 1. Fetch the recipe. The repository is private, so Composer clones it over SSH.
-ddev auth ssh
-ddev composer config repositories.varbase_ai_content_operations_base vcs git@github.com:Vardot/varbase_ai_content_operations_base.git
-ddev composer config --json extra.drupal-recipe-unpack.ignore '["vardot/varbase_ai_content_operations_base"]'
-ddev composer require vardot/varbase_ai_content_operations_base:~1.0.1 --prefer-source
+# 1. Fetch the recipe.
+ddev composer config --json extra.drupal-recipe-unpack.ignore '["drupal/varbase_ai_content_operations_base"]'
+ddev composer require drupal/varbase_ai_content_operations_base:1.0.x-dev
 
 # 2. Apply it.
 ddev drush recipe ../recipes/varbase_ai_content_operations_base
@@ -80,9 +77,6 @@ ddev drush cr
 
 # 3. Check it. Without arguments no AI key is needed. "ask <uid> <question>" asks the agent one real question as
 #    that user.
-ddev drush php:eval "$(sed -n "/<<'PHP'/,/^ *PHP\$/p" recipes/varbase_ai_content_operations_base/.github/workflows/ci.yml | sed '1d;$d')"
-ddev drush php:eval "$(sed -n "/<<'PHP'/,/^ *PHP\$/p" recipes/varbase_ai_content_operations_base/.github/workflows/ci.yml | sed '1d;$d' \
-  | sed "s/^ *\$extra = .*/\$extra = ['ask', '1', 'Which tags are near-duplicates?'];/")"
 ```
 
 Re-applying the recipe is safe. The ignore line keeps the recipe a locked package: without it core's
@@ -92,23 +86,13 @@ Then sign in as an editor, open any admin page and open **Content operations** i
 
 ## Automated testing
 
-`.github/workflows/ci.yml` runs on every pull request, every push to `1.0.x` and every tag:
+GitLab CI on [git.drupalcode.org](https://git.drupalcode.org/project/varbase_ai_content_operations_base) (`.gitlab-ci.yml`) runs on every merge
+request and every push to `1.0.x`, like the other Varbase AI recipes: `composer validate` and a lint of every YAML
+file.
 
-1. **Lint**: `composer validate`, every YAML file, and PHP syntax.
-2. **Apply on a Varbase 11 site**: built the way Vardot's public recipe CI builds one (`drupal/varbase_project`
-   `11.0.x-dev` with Varbase's curated patches, installed from Varbase Starter, on MariaDB 11.8). It requires
-   this checkout, applies the recipe twice and runs the no-key recipe check.
-3. **Functional tests**: the same job then serves the site and runs the Playwright + Cucumber scenarios in
-   `tests/features` through [`@vardot/varbase-e2e`](https://www.npmjs.com/package/@vardot/varbase-e2e) in
-   Chromium. The Webmaster provisions the testing users first, then the scenarios check the agent and assistant
-   pages, a content editor's admin pages with the assistant in the toolbar, every page for PHP errors, and that
-   signed-in users without an editorial role and anonymous visitors cannot see the assistant settings. Screenshots
-   and reports of a failed run are kept as the `functional-tests` artifact. To run them against a site of your
-   own: `yarn install`, then `LAUNCH_URL=https://your-site.ddev.site yarn test`.
-
-The CI step "Check the recipe without an AI key" (an inline `drush php:eval` in `.github/workflows/ci.yml`) makes 41 checks with no AI key: the modules, the agent's exact tool set (and that none of them
-deletes or changes the content model), the assistant's roles, the toolbar block, the permissions, and that the save
-tool refuses an account without edit access.
+The functional tests in `tests/features` (Playwright and Cucumber through
+[`@vardot/varbase-e2e`](https://www.npmjs.com/package/@vardot/varbase-e2e)) run against a site of your own:
+`yarn install`, then `LAUNCH_URL=https://your-site.ddev.site yarn test`.
 
 ## Checked
 
@@ -159,9 +143,9 @@ tables).
 
 | Recipe | What it does |
 |---|---|
-| [Varbase AI Content Review Base](https://github.com/Vardot/varbase_ai_content_review_base) | Scores one content item against the site's style guide, from its Review tab. |
-| [Varbase AI Chatbot Base](https://github.com/Vardot/varbase_ai_chatbot_base) | A visitor chatbot that answers from published content only. |
-| [Varbase AI Answers Base](https://github.com/Vardot/varbase_ai_answers_base) | Ask AI: cited answers over the site's vector index. |
+| [Varbase AI Content Review Base](https://www.drupal.org/project/varbase_ai_content_review_base) | Scores one content item against the site's style guide, from its Review tab. |
+| [Varbase AI Chatbot Base](https://www.drupal.org/project/varbase_ai_chatbot_base) | A visitor chatbot that answers from published content only. |
+| [Varbase AI Answers Base](https://www.drupal.org/project/varbase_ai_answers_base) | Ask AI: cited answers over the site's vector index. |
 
 ## License
 
