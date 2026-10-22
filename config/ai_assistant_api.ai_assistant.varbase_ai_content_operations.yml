@@ -1,0 +1,40 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - ai_agents.ai_agent.varbase_ai_content_operations
+id: varbase_ai_content_operations
+label: 'Content operations assistant'
+description: 'For editors, in the admin toolbar. Audits, reports and bulk changes on the site content, through the Content operations assistant agent. Saves only after the editor approves.'
+allow_history: private_tempstore
+chat_memory_settings:
+  expiry: 604800
+  max_messages: 10
+error_message: 'Sorry, I could not finish that. Please try again, or ask for a smaller part.'
+specific_error_messages:
+  AiBadRequestException: 'I am sorry, there was an issue with your request. If the problem persists, please contact an administrator.'
+  AiRateLimitException: 'I am sorry, the request has been rejected due to rate limits. Please try again later.'
+  AiQuotaException: 'I am sorry, something went wrong. This could be due to the AI account needing more credits.'
+  AiSetupFailureException: 'I am sorry, there is an issue with the AI integration on this site. Please contact an administrator.'
+  AiRequestErrorException: 'I am sorry, there was an error communicating with the AI. If the problem persists, please contact an administrator.'
+# The site's default chat model, which must support tools. A low temperature
+# keeps reports close to what the tools returned.
+llm_provider: __default__
+llm_model: ''
+llm_configuration:
+  max_tokens: 8192
+  temperature: 0.2
+  frequency_penalty: 0
+  presence_penalty: 0
+  top_p: 1.0
+actions_enabled: {  }
+# Only Varbase's editorial roles. Every tool still checks the editor's own
+# permissions on each item it reads or saves.
+roles:
+  content_editor: content_editor
+  content_admin: content_admin
+  seo_admin: seo_admin
+  site_admin: site_admin
+  administrator: administrator
+use_function_calling: false
+ai_agent: varbase_ai_content_operations

@@ -1,0 +1,58 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - ai_assistant_api.ai_assistant.varbase_ai_content_operations
+  module:
+    - ai_chatbot
+    - user
+  theme:
+    - gin
+id: gin_varbase_ai_content_operations
+theme: gin
+region: content
+weight: 1
+provider: null
+plugin: ai_deepchat_block
+settings:
+  id: ai_deepchat_block
+  label: 'Content operations assistant'
+  label_display: '0'
+  provider: ai_chatbot
+  bot_name: 'Content operations'
+  bot_image: /modules/contrib/ai/modules/ai_chatbot/assets/ai-icon-gradient.svg
+  use_username: 0
+  default_username: ''
+  use_avatar: 0
+  default_avatar: /core/misc/druplicon.png
+  first_message: 'I help you keep the content correct, findable and consistent. Ask me to audit links and alt text, draft missing meta descriptions, find unused or duplicate tags, report what was published and what is stuck in draft, or rename a term across the site. I show every change first and save only when you approve.'
+  loading_message: 'Working on it'
+  agent_delegation_message: ''
+  stream: 0
+  toggle_state: remember
+  width: auto
+  height: 100%
+  placement: toolbar
+  show_copy_icon: true
+  collapse_minimal: false
+  style_file: toolbar.yml
+  disable_csrf: false
+  chat_processor_plugin: ai_assistant_api_processor
+  plugin_configuration:
+    assistant_id: varbase_ai_content_operations
+    stream_output: false
+    verbose_mode: false
+    show_structured_results: false
+  expansion_method: expand
+# Shown to the editorial roles the assistant serves.
+visibility:
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      content_editor: content_editor
+      content_admin: content_admin
+      seo_admin: seo_admin
+      site_admin: site_admin

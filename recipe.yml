@@ -1,0 +1,41 @@
+name: 'Varbase AI Content Operations Base'
+description: >-
+  A content operations assistant for the editors of a Varbase 11 site, in the
+  admin toolbar. Editors ask in their own words: audit broken internal links
+  and missing alt text, draft the missing meta descriptions, find content
+  types and terms nothing uses and near-duplicate tags, report what was
+  published by author and section and what is stuck in draft, or rename a term
+  across the content with a diff of every change. It reads and saves through
+  the Tool API with the editor's own permissions, shows every change first,
+  and saves only what the editor approves, as new revisions. It never deletes.
+  Needs a default chat model that supports tools. No custom PHP or shell code.
+  Experimental: Tool API and Tool Belt have no stable release yet.
+type: 'Varbase AI'
+install:
+  - node
+  - user
+  - block
+  - ai
+  - ai_agents
+  - ai_assistant_api
+  - ai_chatbot
+  - tool
+  - tool_ai_connector
+  - tool_belt
+  - tool_belt_content
+  - tool_belt_entity
+  - gin
+config:
+  # Re-applying must be safe: create what is missing and leave the rest.
+  strict: false
+  actions:
+    # The DeepChat API carries the conversation; the assistant's own roles
+    # setting decides who may use this assistant.
+    user.role.content_editor:
+      grantPermission: 'access deepchat api'
+    user.role.content_admin:
+      grantPermission: 'access deepchat api'
+    user.role.seo_admin:
+      grantPermission: 'access deepchat api'
+    user.role.site_admin:
+      grantPermission: 'access deepchat api'
