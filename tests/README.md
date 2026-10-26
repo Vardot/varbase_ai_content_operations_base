@@ -5,10 +5,10 @@ Varbase 11 site with this recipe applied.
 
 | Feature | Covers |
 | --- | --- |
-| `01-01-ai-content-operations-base-agent.feature` | The assistant and its agent: list, load and update tools, and no delete tool |
-| `01-02-ai-content-operations-base-toolbar.feature` | Editors, content admins and SEO admins open the assistant from the toolbar; other users have none |
+| `01-01-ai-content-operations-base-toolbar.feature` | Each editorial role opens the assistant from the toolbar; a signed-in user without an editorial role has none; an editor asks it about the site's content and gets an answer |
+| `01-02-ai-content-operations-base-accessibility.feature` | The content page with the assistant gives every field a label and every link a name |
 
-The agent tools, the toolbar button and the chat input are named selectors in `tests/selectors/ai-content-operations-base-selectors.json`.
+The toolbar button, the consent button and the chat input are named selectors in `tests/selectors/ai-content-operations-base-selectors.json`.
 
 ## Run it
 
@@ -23,8 +23,6 @@ The site needs the webmaster (`webmaster`) and one user per role, named after th
 
 ## AI provider
 
-The toolbar assistant is shown only when the site has an AI provider with a default chat model, so CI makes the
-AI module's test provider (EchoAI) the default with `tests/recipes/varbase_ai_testing_provider`. No key is
-needed. Scenarios tagged `@ai-provider` need a real provider with a chat model that supports tools
-(`npm run test:ai-provider`); in CI they run in their own job, only when the project has an `OPENAI_API_KEY`
-variable.
+CI applies Drupal CMS AI before the recipe. It sets up an amazee.ai trial as the default provider, so no key
+is needed and the assistant answers from a real model. Drupal CMS AI asks before the chat assistant loads; the
+scenarios answer "Yes (this time)", as an editor would.

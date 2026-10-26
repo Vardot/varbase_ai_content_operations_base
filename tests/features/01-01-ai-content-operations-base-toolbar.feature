@@ -8,6 +8,7 @@ Feature: Varbase AI Recipe - AI Content Operations Base - The assistant in the e
     Given I am a logged in user with the "<user>" user
      When I go to "/admin/content"
       And I click the "Open AI assistant" button
+      And I click allow the chat assistant this time
      Then I should see "I help you keep the content correct, findable and consistent."
       And I see visible chat input
 
@@ -20,16 +21,19 @@ Feature: Varbase AI Recipe - AI Content Operations Base - The assistant in the e
   Scenario: Check a signed-in user without an editorial role has no assistant
     Given I am a logged in user with the "Authenticated user" user
      When I go to "/user"
-     Then I don't see assistant button
-      And I should see "authenticated_user"
+     Then I should see "authenticated_user"
+      And I don't see assistant button
 
-  @ai-provider
-  Scenario: Verify the assistant reports the blog posts still in draft
+  Scenario: Verify the assistant answers an editor's question about the site's content
+    CI has no real RAG or vector database hosting: it uses only what the pipeline has and the free amazee.ai
+    trial from Drupal CMS AI (thanks to amazee.ai). A short answer comes back within 10 seconds.
     Given I am a logged in user with the "Content editor" user
      When I go to "/admin/content"
       And I click the "Open AI assistant" button
-      And I click chat input
-      And I fill in the field "#text-input" with "Which blog posts are still in draft?"
+      And I click allow the chat assistant this time
+      And I fill in "Ask me anything" with "Which blog posts are still in draft?"
       And I press the key "Enter"
+      And I wait max of 10 seconds
       And I wait for the text "Working on it" to disappear
-     Then I should not see "Sorry, I could not finish that."
+     Then I should see "Which blog posts are still in draft?"
+      And I should not see "Sorry, I could not finish that."
