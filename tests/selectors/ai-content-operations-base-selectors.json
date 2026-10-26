@@ -1,0 +1,10 @@
+{
+  "css": {
+    "list content tool": ".ai-tools-library-item:has(.ai-tools-library-item__remove[data-tool-id='tool:tool_belt:entity_list'])",
+    "load content tool": ".ai-tools-library-item:has(.ai-tools-library-item__remove[data-tool-id='tool:tool_belt:entity_load_by_id'])",
+    "update content tool": ".ai-tools-library-item:has(.ai-tools-library-item__remove[data-tool-id='tool:tool_belt:entity_update'])",
+    "delete tool": ".ai-tools-library-item:has(.ai-tools-library-item__remove[data-tool-id*='delete'])",
+    "assistant button": "button[aria-label='Open AI assistant']",
+    "chat input": "deep-chat #text-input"
+  }
+}
