@@ -1,7 +1,7 @@
 [![Varbase](https://raw.githubusercontent.com/Vardot/varbase/11.0.x/images/varbase-logo.png)](https://www.drupal.org/project/varbase)
 
 # Varbase AI Content Operations Base
-[![Varbase AI Content Operations Base](https://img.shields.io/badge/Varbase%20AI%20Content%20Operations%20Base-1.0.0--alpha1-0d6efc?labelColor=001d38&style=flat-square)](https://www.drupal.org/project/varbase_ai_content_operations_base)
+[![Varbase AI Content Operations Base](https://img.shields.io/badge/Varbase%20AI%20Content%20Operations%20Base-1.0.0--beta1-0d6efc?labelColor=001d38&style=flat-square)](https://www.drupal.org/project/varbase_ai_content_operations_base)
 
 An **opt-in** Drupal recipe that gives the editors of a Varbase 11 site a **content operations assistant**
 in the admin toolbar. Editors ask in their own words, and it audits, reports on and updates the site's content:
