@@ -2,7 +2,7 @@
     "name": "drupal/varbase_ai_content_operations_base",
     "description": "A content operations assistant for the editors of a Varbase 11 site: audits broken internal links and missing alt text, drafts missing meta descriptions, finds unused and near-duplicate terms, reports editorial status, and renames a term across content with a diff. It works with the editor's own permissions, shows every change first, and saves only what the editor approves, as new revisions. Experimental: Tool API and Tool Belt have no stable release. No custom PHP or shell code.",
     "type": "drupal-recipe",
-    "version": "1.0.x-dev",
+    "version": "1.0.0-beta2",
     "keywords": [
         "recipe",
         "Varbase recipes",
